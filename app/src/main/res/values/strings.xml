@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Task_01</string>
+    <string name="Intro">Hello Developers</string>
+    <string name="Date">Date</string>
+    <string name="button1">Show Date</string>
+    <string name="button2">Show Time</string>
+    <string name="time">Time</string>
+</resources>
