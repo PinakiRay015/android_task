@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.time.Month;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,10 +21,11 @@ public class MainActivity extends AppCompatActivity {
 
     //taking variable of widgets
 
-    TextView dateText;
-    TextView timeText;
+    TextView dateHint;
+    TextView timeHint;
     Button dateButton;
     Button timeButton;
+    Button reset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +34,21 @@ public class MainActivity extends AppCompatActivity {
 
         //setting find view by Id
 
+        reset = (Button) findViewById(R.id.Reset);
         dateButton = (Button) findViewById(R.id.dateButton);
         timeButton = (Button) findViewById(R.id.timeButton);
-        dateText = (TextView) findViewById(R.id.dateText);
-        timeText = (TextView) findViewById(R.id.timeText);
+        dateHint = (TextView) findViewById(R.id.dateHint);
+        timeHint = (TextView) findViewById(R.id.timeHint);
+
+
+        //setting on click listener for reset button
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetButton();
+            }
+        });
 
         //setting on click listener for date
 
@@ -66,8 +80,9 @@ public class MainActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-              String calender =  year + " " + month + " " + date;
-              dateText.setText(calender);
+                month = month+1;
+              String calender =  month+"/"+date+"/"+year;
+              dateHint.setText(calender);
             }
         },YEAR,MONTH,DATE);
         datePickerDialog.show();
@@ -87,10 +102,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour , int minute) {
               String time = "Hour :"+" "+hour+" "+"Minute :"+" "+minute;
-              timeText.setText(time);
+              timeHint.setText(time);
             }
         },HOUR , MINUTE , true);
         timePickerDialog.show();
         Toast.makeText(getApplicationContext(), "Please Select ur Time", Toast.LENGTH_SHORT).show();
+    }
+
+    //setting function for reset
+
+    private void resetButton()
+    {
+        Intent intent = new Intent(MainActivity.this , MainActivity.class);
+        startActivity(intent);
+        Toast.makeText(getApplicationContext(), "Reset!!", Toast.LENGTH_SHORT).show();
     }
 }
